@@ -140,3 +140,118 @@ void updateBalance(int accNo, double newBalance) {
     remove("account.txt");
     rename("temp.txt", "account.txt");
 }
+
+
+// Function to show ATM menu after login
+void atmMenu(int accNo, string name, double& balance) {
+    int choice;
+    
+    do {
+        cout << "\n===== ATM MENU =====\n";
+        cout << "1. Balance Inquiry\n";
+        cout << "2. Withdraw\n";
+        cout << "3. Fast Cash\n";
+        cout << "4. Deposit\n";
+        cout << "5. Logout\n";
+        cout << "Enter Choice: ";
+        cin >> choice;
+        
+        switch (choice) {
+            case 1: {
+                // Balance Inquiry
+                cout << "\nAccount Holder: " << name << endl;
+                cout << "Balance: $" << balance << endl;
+                break;
+            }
+            
+            case 2: {
+                // Withdraw
+                double amount;
+                cout << "\nEnter Amount to Withdraw: $";
+                cin >> amount;
+                
+                if (amount <= 0) {
+                    cout << "Invalid amount!\n";
+                }
+                else if (amount > balance) {
+                    cout << "Insufficient Balance!\n";
+                }
+                else if (amount > 20000) {
+                    cout << "Withdrawal limit is $20,000!\n";
+                }
+                else {
+                    balance = balance - amount;
+                    updateBalance(accNo, balance);
+                    cout << "Withdrawal Successful!\n";
+                    cout << "New Balance: $" << balance << endl;
+                }
+                break;
+            }
+            
+            case 3: {
+                // Fast Cash
+                int option, amount;
+                cout << "\n===== FAST CASH =====\n";
+                cout << "1. $500\n";
+                cout << "2. $1,000\n";
+                cout << "3. $2,000\n";
+                cout << "4. $3,000\n";
+                cout << "5. $4,000\n";
+                cout << "6. $5,000\n";
+                cout << "Choose option: ";
+                cin >> option;
+                
+                if (option == 1) amount = 500;
+                else if (option == 2) amount = 1000;
+                else if (option == 3) amount = 2000;
+                else if (option == 4) amount = 3000;
+                else if (option == 5) amount = 4000;
+                else if (option == 6) amount = 5000;
+                else {
+                    cout << "Invalid option!\n";
+                    break;
+                }
+                
+                if (amount > balance) {
+                    cout << "Insufficient Balance!\n";
+                }
+                else {
+                    balance = balance - amount;
+                    updateBalance(accNo, balance);
+                    cout << "Fast Cash Successful!\n";
+                    cout << "New Balance: $" << balance << endl;
+                }
+                break;
+            }
+            
+            case 4: {
+                // Deposit
+                double deposit;
+                cout << "\nEnter Deposit Amount: $";
+                cin >> deposit;
+                
+                if (deposit <= 0) {
+                    cout << "Invalid amount!\n";
+                }
+                else {
+                    balance = balance + deposit;
+                    updateBalance(accNo, balance);
+                    cout << "Deposit Successful!\n";
+                    cout << "New Balance: $" << balance << endl;
+                }
+                break;
+            }
+            
+            case 5: {
+                // Logout
+                cout << "\nLogged Out Successfully!\n";
+                cout << "Thank you, " << name << "!\n";
+                break;
+            }
+            
+            default: {
+                cout << "Invalid choice! Please try again.\n";
+            }
+        }
+    } while (choice != 5);
+}
