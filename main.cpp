@@ -63,3 +63,14 @@ void createAccount() {
         cout << "\nBalance cannot be negative!\n";
         return;
     }
+    // Save to file
+    ofstream file("account.txt", ios::app);
+    file << accNo << endl;
+    file << name << endl;
+    file << pin << endl;
+    file << balance << endl;
+    file << "------------------------" << endl; // Separator between accounts
+    file.close();
+    
+    cout << "\nAccount Created Successfully!\n";
+}
