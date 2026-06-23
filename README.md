@@ -66,4 +66,6 @@ g++ atm.cpp -o atm
 
 ## Tech Stack
 
-**Language:** C++ **I/O:** File streams (`fstream`) **Standard:** C++11
+**Language:** C++ 
+**I/O:** File streams (`fstream`) 
+**Standard:** C++11
