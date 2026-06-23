@@ -101,3 +101,42 @@ bool findAccount(int accNo, int& savedPin, double& balance, string& name) {
     file.close();
     return false;
 }
+
+// Function to update account balance
+void updateBalance(int accNo, double newBalance) {
+    ifstream file("account.txt");
+    ofstream temp("temp.txt");
+    
+    int tempAcc, tempPin;
+    double tempBalance;
+    string tempName;
+    
+    while (file >> tempAcc) {
+        file.ignore();
+        getline(file, tempName);
+        file >> tempPin;
+        file >> tempBalance;
+        
+        if (tempAcc == accNo) {
+            // Update this account with new balance
+            temp << tempAcc << endl;
+            temp << tempName << endl;
+            temp << tempPin << endl;
+            temp << newBalance << endl;
+            temp << "------------------------" << endl;
+        } else {
+            // Copy as is
+            temp << tempAcc << endl;
+            temp << tempName << endl;
+            temp << tempPin << endl;
+            temp << tempBalance << endl;
+            temp << "------------------------" << endl;
+        }
+    }
+    
+    file.close();
+    temp.close();
+    
+    remove("account.txt");
+    rename("temp.txt", "account.txt");
+}
