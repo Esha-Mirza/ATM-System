@@ -255,3 +255,80 @@ void atmMenu(int accNo, string name, double& balance) {
         }
     } while (choice != 5);
 }
+
+
+// Main function - program starts here
+int main() {
+    int mainChoice;
+    
+    cout << "\n========================================\n";
+    cout << "     WELCOME TO SIMPLE ATM SYSTEM       \n";
+    cout << "========================================\n";
+    
+    do {
+        cout << "\n===== MAIN MENU =====\n";
+        cout << "1. Create Account\n";
+        cout << "2. Login\n";
+        cout << "3. Exit\n";
+        cout << "Enter Choice: ";
+        cin >> mainChoice;
+        
+        if (mainChoice == 1) {
+            // Create Account
+            createAccount();
+        }
+        else if (mainChoice == 2) {
+            // Login
+            int accNo, pin, pinAttempts = 0;
+            bool loggedIn = false;
+            
+            cout << "\nEnter Account Number: ";
+            cin >> accNo;
+            
+            int savedPin;
+            double balance;
+            string name;
+            
+            // Check if account exists
+            if (!findAccount(accNo, savedPin, balance, name)) {
+                cout << "\nAccount not found!\n";
+                continue; // Go back to main menu
+            }
+            
+            cout << "\nWelcome, " << name << "!\n";
+            
+            // PIN attempts loop
+            while (pinAttempts < 3 && !loggedIn) {
+                cout << "Enter PIN: ";
+                cin >> pin;
+                
+                if (pin == savedPin) {
+                    loggedIn = true;
+                    cout << "\nLogin Successful!\n";
+                    atmMenu(accNo, name, balance); // Show ATM menu
+                }
+                else {
+                    pinAttempts++;
+                    cout << "Incorrect PIN! " << (3 - pinAttempts) << " attempts left.\n";
+                    
+                    if (pinAttempts == 3) {
+                        cout << "\nCard Deactivated! Too many wrong attempts.\n";
+                    }
+                }
+            }
+        }
+        else if (mainChoice == 3) {
+            // Exit
+            cout << "\n========================================\n";
+            cout << "     Thank you for using our ATM!       \n";
+            cout << "          Have a great day!              \n";
+            cout << "========================================\n";
+        }
+        else {
+            cout << "\nInvalid choice! Please enter 1, 2, or 3.\n";
+        }
+        
+    } while (mainChoice != 3);
+    
+    return 0;
+}
