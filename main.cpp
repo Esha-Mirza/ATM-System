@@ -74,3 +74,30 @@ void createAccount() {
     
     cout << "\nAccount Created Successfully!\n";
 }
+// Function to find account and return its details
+bool findAccount(int accNo, int& savedPin, double& balance, string& name) {
+    ifstream file("account.txt");
+    if (!file) return false;
+    
+    int tempAcc, tempPin;
+    double tempBalance;
+    string tempName;
+    
+    while (file >> tempAcc) {
+        file.ignore();
+        getline(file, tempName);
+        file >> tempPin;
+        file >> tempBalance;
+        
+        if (tempAcc == accNo) {
+            savedPin = tempPin;
+            balance = tempBalance;
+            name = tempName;
+            file.close();
+            return true;
+        }
+    }
+    
+    file.close();
+    return false;
+}
